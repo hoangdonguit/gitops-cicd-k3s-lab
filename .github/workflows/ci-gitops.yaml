@@ -1,0 +1,87 @@
+name: ci-gitops
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/**"
+      - "Dockerfile"
+      - "requirements.txt"
+      - ".github/workflows/ci-gitops.yaml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-push-update-manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set image metadata
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          IMAGE_TAG="sha-${SHORT_SHA}"
+
+          echo "IMAGE_NAME=hoangdonguit/gitops-cicd-demo-app" >> "$GITHUB_ENV"
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> "$GITHUB_ENV"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+      - name: Update Kubernetes image tag and app version
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          image_tag = os.environ["IMAGE_TAG"]
+
+          kustomization = Path("k8s/base/kustomization.yaml")
+          text = kustomization.read_text(encoding="utf-8")
+          text = re.sub(r"newTag: .+", f"newTag: {image_tag}", text)
+          kustomization.write_text(text, encoding="utf-8")
+
+          deployment = Path("k8s/base/deployment.yaml")
+          text = deployment.read_text(encoding="utf-8")
+          text = re.sub(
+              r"(- name: APP_VERSION\n\s+value: ).+",
+              rf"\g<1>{image_tag}",
+              text,
+          )
+          deployment.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Show manifest diff
+        run: git diff -- k8s/base/kustomization.yaml k8s/base/deployment.yaml
+
+      - name: Commit manifest update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add k8s/base/kustomization.yaml k8s/base/deployment.yaml
+
+          if git diff --cached --quiet; then
+            echo "No manifest changes to commit."
+          else
+            git commit -m "chore(gitops): update image tag to ${IMAGE_TAG} [skip ci]"
+            git push
+          fi
