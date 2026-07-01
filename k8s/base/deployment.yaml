@@ -25,7 +25,7 @@ spec:
             - name: APP_NAME
               value: gitops-cicd-demo-app
             - name: APP_VERSION
-              value: sha-9a1d923
+              value: sha-be95c88
           readinessProbe:
             httpGet:
               path: /healthz
