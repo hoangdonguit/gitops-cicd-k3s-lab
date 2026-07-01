@@ -14,7 +14,7 @@ APP_VERSION = os.getenv("APP_VERSION", "dev-local")
 def index():
     return jsonify(
         {
-            "message": "Hello from GitOps CI/CD K3s Lab",
+            "message": "Hello from GitOps CI/CD K3s Lab - deployed by ArgoCD",
             "app": APP_NAME,
             "version": APP_VERSION,
             "hostname": socket.gethostname(),
