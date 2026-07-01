@@ -101,6 +101,7 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 - Architecture overview: `docs/architecture/architecture-overview.md`
 - Runtime topology: `docs/architecture/runtime-topology.md`
 - Rollback proof: `docs/evidence/rollback-proof.md`
+- Final runtime state: `docs/evidence/final-runtime-state.md`
 - End-to-end GitOps proof: `docs/evidence/e2e-gitops-proof.md`
 - Operations runbook: `docs/runbook/gitops-runbook.md`
 - GitOps deployment boundary decision: `docs/decisions/gitops-deployment-boundary.md`
