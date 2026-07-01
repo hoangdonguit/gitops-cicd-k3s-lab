@@ -1,6 +1,31 @@
 # gitops-cicd-k3s-lab
 
-A portfolio lab project demonstrating an end-to-end CI/CD and GitOps workflow using GitHub Actions, Docker Hub, Kustomize, ArgoCD, and a K3s cluster.
+[![ci-gitops](https://github.com/hoangdonguit/gitops-cicd-k3s-lab/actions/workflows/ci-gitops.yaml/badge.svg)](https://github.com/hoangdonguit/gitops-cicd-k3s-lab/actions/workflows/ci-gitops.yaml)
+
+A portfolio DevOps / Cloud-Native lab demonstrating an end-to-end CI/CD and GitOps workflow using GitHub Actions, Docker Hub, Kustomize, ArgoCD, and a K3s cluster.
+
+The project focuses on a practical deployment lifecycle: build a container image, publish it with an immutable commit SHA tag, update Kubernetes desired state in Git, let ArgoCD reconcile the cluster, verify the running version, and prove rollback through GitOps.
+
+## What This Project Demonstrates
+
+- CI/CD pipeline design with GitHub Actions.
+- Docker image build and push to Docker Hub.
+- Immutable image tagging using Git commit SHA.
+- Kubernetes manifest management with Kustomize.
+- GitOps deployment model with ArgoCD.
+- Runtime deployment on K3s.
+- Application health and version verification.
+- GitOps rollback and roll-forward without direct manual Deployment edits.
+- Clear separation between CI responsibilities and CD/GitOps responsibilities.
+
+## Verified Capabilities
+
+- End-to-end deployment from code change to running Kubernetes pod.
+- ArgoCD Application isolation using a dedicated AppProject and namespace.
+- Rollback from `sha-be95c88` to `sha-9a1d923`.
+- Roll-forward back to `sha-be95c88`.
+- Runtime evidence documented under `docs/evidence/`.
+- Operational runbook documented under `docs/runbook/`.
 
 ## 1. Project Goal
 
