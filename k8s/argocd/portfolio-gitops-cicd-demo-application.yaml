@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: portfolio-lab
+  namespace: argocd
+spec:
+  description: Portfolio GitOps CI/CD lab projects
+  sourceRepos:
+    - https://github.com/hoangdonguit/gitops-cicd-k3s-lab.git
+  destinations:
+    - namespace: gitops-cicd-demo
+      server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portfolio-gitops-cicd-demo
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: gitops-cicd-k3s-lab
+spec:
+  project: portfolio-lab
+  source:
+    repoURL: https://github.com/hoangdonguit/gitops-cicd-k3s-lab.git
+    targetRevision: main
+    path: k8s/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-cicd-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
