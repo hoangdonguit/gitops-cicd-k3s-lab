@@ -7,4 +7,4 @@ resources:
 
 images:
   - name: hoangdonguit/gitops-cicd-demo-app
-    newTag: dev-initial
+    newTag: sha-9a1d923
