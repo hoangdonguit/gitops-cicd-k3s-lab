@@ -96,16 +96,22 @@ The core CI/CD and GitOps flow has been verified:
 
 Evidence: `docs/evidence/e2e-gitops-proof.md`
 
+## Documentation
+
+- Architecture overview: `docs/architecture/architecture-overview.md`
+- End-to-end GitOps proof: `docs/evidence/e2e-gitops-proof.md`
+- Operations runbook: `docs/runbook/gitops-runbook.md`
+- GitOps deployment boundary decision: `docs/decisions/gitops-deployment-boundary.md`
 ## 8. Planned Milestones
 
 - [x] Bootstrap Flask app
 - [x] Add Dockerfile
 - [x] Add Kubernetes manifests with Kustomize
-- [ ] Add GitHub Actions CI workflow
-- [ ] Push image to Docker Hub with commit SHA tag
-- [ ] Auto-update Kustomize image tag
-- [ ] Install/configure ArgoCD on K3s
-- [ ] Create ArgoCD Application
+- [x] Add GitHub Actions CI workflow
+- [x] Push image to Docker Hub with commit SHA tag
+- [x] Auto-update Kustomize image tag
+- [x] Reuse existing ArgoCD on K3s
+- [x] Create isolated ArgoCD Application
 - [x] Verify GitOps deployment flow
 - [ ] Add screenshots and final CV-ready documentation
 
