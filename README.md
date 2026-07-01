@@ -84,6 +84,18 @@ The application image is managed through Kustomize and will later be updated aut
 - GitHub Actions must not deploy directly to Kubernetes using kubectl apply.
 - ArgoCD is responsible for syncing the desired state from Git to K3s.
 
+## Verified End-to-End Result
+
+The core CI/CD and GitOps flow has been verified:
+
+- GitHub Actions built and pushed Docker image `hoangdonguit/gitops-cicd-demo-app:sha-be95c88`.
+- GitHub Actions updated the Kubernetes manifests in Git.
+- ArgoCD synced the application into a K3s cluster.
+- The running pod returned version `sha-be95c88`.
+- The application response confirmed the updated code was deployed by ArgoCD.
+
+Evidence: `docs/evidence/e2e-gitops-proof.md`
+
 ## 8. Planned Milestones
 
 - [x] Bootstrap Flask app
@@ -94,7 +106,7 @@ The application image is managed through Kustomize and will later be updated aut
 - [ ] Auto-update Kustomize image tag
 - [ ] Install/configure ArgoCD on K3s
 - [ ] Create ArgoCD Application
-- [ ] Verify GitOps deployment flow
+- [x] Verify GitOps deployment flow
 - [ ] Add screenshots and final CV-ready documentation
 
 ## 9. Author
