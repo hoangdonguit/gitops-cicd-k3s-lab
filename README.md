@@ -133,9 +133,11 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 - End-to-end GitOps proof: `docs/evidence/e2e-gitops-proof.md`
 - CI quality gates proof: `docs/evidence/ci-quality-gates-proof.md`
 - Security hardening proof: `docs/evidence/security-hardening-proof.md`
+- Final project summary: `docs/summary/final-project-summary.md`
 - Operations runbook: `docs/runbook/gitops-runbook.md`
 - GitOps deployment boundary decision: `docs/decisions/gitops-deployment-boundary.md`
 - Security hardening decision: `docs/decisions/security-hardening.md`
+
 ## Current Verified Runtime
 
 Latest verified runtime state:
@@ -158,7 +160,7 @@ Latest verified runtime state:
 - [x] Reuse existing ArgoCD on K3s
 - [x] Create isolated ArgoCD Application
 - [x] Verify GitOps deployment flow
-- [x] Add screenshots and final CV-ready documentation
+- [x] Add final CV-ready documentation and evidence
 
 ## 9. Author
 
