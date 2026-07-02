@@ -7,6 +7,23 @@ A portfolio DevOps / Cloud-Native lab demonstrating an end-to-end CI/CD and GitO
 
 The project focuses on a practical deployment lifecycle: build a container image, publish it with an immutable commit SHA tag, update Kubernetes desired state in Git, let ArgoCD reconcile the cluster, verify the running version, and prove rollback through GitOps.
 
+## Architecture Diagram
+
+```mermaid
+flowchart LR
+    Dev[Developer Push] --> GH[GitHub Repository]
+    GH --> CI[GitHub Actions]
+    CI --> Test[Quality Gates: pytest + Kustomize render]
+    Test --> Build[Build Docker Image]
+    Build --> Hub[Docker Hub]
+    CI --> Manifest[Update Kustomize Image Tag]
+    Manifest --> Git[Commit Desired State to Git]
+    Git --> ArgoCD[ArgoCD Application]
+    ArgoCD --> K3s[K3s Cluster]
+    K3s --> Pod[Hardened Flask Pod]
+    Pod --> Verify[/version and /healthz Verification]
+```
+
 ## What This Project Demonstrates
 
 - CI/CD pipeline design with GitHub Actions.
@@ -123,6 +140,15 @@ The core CI/CD and GitOps flow has been verified:
 - The application response confirmed the updated code was deployed by ArgoCD.
 
 Evidence: `docs/evidence/e2e-gitops-proof.md`
+
+## Screenshots
+
+Selected verification screenshots are stored under `docs/screenshots/`:
+
+- GitHub Actions CI success: `docs/screenshots/github-actions-ci-success.png`
+- ArgoCD Synced/Healthy application: `docs/screenshots/argocd-app-synced-healthy.png`
+- K3s runtime verification: `docs/screenshots/k3s-runtime-verification.png`
+- Security context verification: `docs/screenshots/security-context-verification.png`
 
 ## Documentation
 
