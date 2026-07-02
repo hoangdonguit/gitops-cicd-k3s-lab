@@ -10,25 +10,18 @@ The project focuses on a practical deployment lifecycle: build a container image
 ## Architecture Diagram
 
 ```mermaid
-flowchart TD
-    Dev["Developer Push"] --> GH["GitHub Repository"]
+flowchart LR
+    Dev["Dev Push"] --> GH["GitHub Repo"]
     GH --> CI["GitHub Actions"]
-
-    subgraph Pipeline["CI/CD Pipeline"]
-        CI --> Test["Quality Gates"]
-        Test --> Build["Build Docker Image"]
-        Build --> Hub["Push to Docker Hub"]
-        CI --> Manifest["Update Kustomize Image Tag"]
-        Manifest --> Git["Commit Desired State"]
-    end
-
-    Git --> ArgoCD["ArgoCD Application"]
-    ArgoCD --> K3s["K3s Cluster"]
-    K3s --> Pod["Hardened Flask Pod"]
-    Pod --> Verify["Runtime Verification"]
-
-    Verify --> Version["/version"]
-    Verify --> Health["/healthz"]
+    CI --> QG["Tests + Kustomize Render"]
+    QG --> Build["Build Image"]
+    Build --> Hub["Docker Hub"]
+    CI --> Tag["Update Image Tag"]
+    Tag --> Git["Commit Desired State"]
+    Git --> Argo["ArgoCD"]
+    Argo --> K3s["K3s"]
+    K3s --> Pod["Hardened Pod"]
+    Pod --> Verify["version + healthz"]
 ```
 
 ## What This Project Demonstrates
