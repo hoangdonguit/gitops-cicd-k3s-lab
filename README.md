@@ -23,6 +23,7 @@ The project focuses on a practical deployment lifecycle: build a container image
 
 - End-to-end deployment from code change to running Kubernetes pod.
 - CI quality gates with unit tests and Kustomize render validation.
+- Container and Kubernetes security hardening with non-root runtime and restricted privileges.
 - ArgoCD Application isolation using a dedicated AppProject and namespace.
 - Rollback from `sha-be95c88` to `sha-9a1d923`.
 - Roll-forward back to `sha-be95c88`.
@@ -133,6 +134,7 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 - CI quality gates proof: `docs/evidence/ci-quality-gates-proof.md`
 - Operations runbook: `docs/runbook/gitops-runbook.md`
 - GitOps deployment boundary decision: `docs/decisions/gitops-deployment-boundary.md`
+- Security hardening decision: `docs/decisions/security-hardening.md`
 ## 8. Planned Milestones
 
 - [x] Bootstrap Flask app

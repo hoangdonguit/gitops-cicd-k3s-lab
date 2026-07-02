@@ -5,15 +5,16 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+RUN addgroup --gid 10001 appgroup \
+    && adduser --uid 10001 --ingroup appgroup --disabled-password --gecos "" --no-create-home appuser
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 
 COPY app ./app
 
-USER appuser
+USER 10001:10001
 
 EXPOSE 8080
 
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "app.main:app"]
+CMD ["gunicorn", "--worker-tmp-dir", "/tmp", "--access-logfile", "-", "--error-logfile", "-", "-b", "0.0.0.0:8080", "app.main:app"]

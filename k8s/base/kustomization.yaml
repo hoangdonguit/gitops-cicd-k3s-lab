@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+  - networkpolicy.yaml
 
 images:
   - name: hoangdonguit/gitops-cicd-demo-app
