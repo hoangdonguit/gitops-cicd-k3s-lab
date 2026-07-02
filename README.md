@@ -11,17 +11,17 @@ The project focuses on a practical deployment lifecycle: build a container image
 
 ```mermaid
 flowchart LR
-    Dev[Developer Push] --> GH[GitHub Repository]
-    GH --> CI[GitHub Actions]
-    CI --> Test[Quality Gates: pytest + Kustomize render]
-    Test --> Build[Build Docker Image]
-    Build --> Hub[Docker Hub]
-    CI --> Manifest[Update Kustomize Image Tag]
-    Manifest --> Git[Commit Desired State to Git]
-    Git --> ArgoCD[ArgoCD Application]
-    ArgoCD --> K3s[K3s Cluster]
-    K3s --> Pod[Hardened Flask Pod]
-    Pod --> Verify[/version and /healthz Verification]
+    Dev["Developer Push"] --> GH["GitHub Repository"]
+    GH --> CI["GitHub Actions"]
+    CI --> Test["Quality Gates: pytest + Kustomize render"]
+    Test --> Build["Build Docker Image"]
+    Build --> Hub["Docker Hub"]
+    CI --> Manifest["Update Kustomize Image Tag"]
+    Manifest --> Git["Commit Desired State to Git"]
+    Git --> ArgoCD["ArgoCD Application"]
+    ArgoCD --> K3s["K3s Cluster"]
+    K3s --> Pod["Hardened Flask Pod"]
+    Pod --> Verify["version and healthz verification"]
 ```
 
 ## What This Project Demonstrates
@@ -143,12 +143,35 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 
 ## Screenshots
 
-Selected verification screenshots are stored under `docs/screenshots/`:
+Selected verification screenshots are stored under `docs/screenshots/`.
 
-- GitHub Actions CI success: `docs/screenshots/github-actions-ci-success.png`
-- ArgoCD Synced/Healthy application: `docs/screenshots/argocd-app-synced-healthy.png`
-- K3s runtime verification: `docs/screenshots/k3s-runtime-verification.png`
-- Security context verification: `docs/screenshots/security-context-verification.png`
+<details>
+<summary>GitHub Actions CI/CD success</summary>
+
+<img src="docs/screenshots/github-actions-ci-success.png" alt="GitHub Actions CI/CD success" width="900">
+
+</details>
+
+<details>
+<summary>ArgoCD Application Synced/Healthy</summary>
+
+<img src="docs/screenshots/argocd-app-synced-healthy.png" alt="ArgoCD Application Synced Healthy" width="700">
+
+</details>
+
+<details>
+<summary>K3s runtime verification</summary>
+
+<img src="docs/screenshots/k3s-runtime-verification.png" alt="K3s runtime verification" width="900">
+
+</details>
+
+<details>
+<summary>Kubernetes securityContext verification</summary>
+
+<img src="docs/screenshots/security-context-verification.png" alt="Kubernetes security context verification" width="900">
+
+</details>
 
 ## Documentation
 
