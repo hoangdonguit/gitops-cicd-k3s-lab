@@ -17,6 +17,8 @@ The `ci-gitops` workflow now validates the project before building the image:
 - Check that the rendered manifest contains a Deployment and Service.
 - Upload the rendered manifest as a GitHub Actions artifact.
 
+The build and manifest update job depends on the validation job. If validation fails, the image is not pushed and the GitOps desired state is not updated.
+
 ## Verified Commits
 
 - CI quality gates commit: `3fca754`
@@ -36,13 +38,19 @@ Then GitHub Actions updated the GitOps manifests:
 
 ArgoCD synced the new desired state into K3s.
 
-Expected runtime result:
+Verified runtime result:
 
 - ArgoCD Application: `Synced / Healthy`
 - Deployment rollout: successful
+- Running pod: `gitops-cicd-demo-app-7d9d5d76c6-lkgxn`
+- Runtime node: `vm2-mesh`
+- Live image: `hoangdonguit/gitops-cicd-demo-app:sha-3fca754`
+- Live `APP_VERSION`: `sha-3fca754`
 - `/version`: `sha-3fca754`
 - `/healthz`: `ok`
 
 ## Why This Matters
 
 The pipeline now has a quality gate before image publication. If tests or manifest rendering fail, the image is not pushed and the GitOps desired state is not updated.
+
+This keeps the deployment flow safer because invalid application code or broken Kubernetes manifests are blocked before they reach the runtime cluster.
