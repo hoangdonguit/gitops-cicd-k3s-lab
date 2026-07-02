@@ -10,18 +10,25 @@ The project focuses on a practical deployment lifecycle: build a container image
 ## Architecture Diagram
 
 ```mermaid
-flowchart LR
+flowchart TD
     Dev["Developer Push"] --> GH["GitHub Repository"]
     GH --> CI["GitHub Actions"]
-    CI --> Test["Quality Gates: pytest + Kustomize render"]
-    Test --> Build["Build Docker Image"]
-    Build --> Hub["Docker Hub"]
-    CI --> Manifest["Update Kustomize Image Tag"]
-    Manifest --> Git["Commit Desired State to Git"]
+
+    subgraph Pipeline["CI/CD Pipeline"]
+        CI --> Test["Quality Gates"]
+        Test --> Build["Build Docker Image"]
+        Build --> Hub["Push to Docker Hub"]
+        CI --> Manifest["Update Kustomize Image Tag"]
+        Manifest --> Git["Commit Desired State"]
+    end
+
     Git --> ArgoCD["ArgoCD Application"]
     ArgoCD --> K3s["K3s Cluster"]
     K3s --> Pod["Hardened Flask Pod"]
-    Pod --> Verify["version and healthz verification"]
+    Pod --> Verify["Runtime Verification"]
+
+    Verify --> Version["/version"]
+    Verify --> Health["/healthz"]
 ```
 
 ## What This Project Demonstrates
@@ -146,30 +153,46 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 Selected verification screenshots are stored under `docs/screenshots/`.
 
 <details>
-<summary>GitHub Actions CI/CD success</summary>
+<summary><strong>GitHub Actions CI/CD success</strong></summary>
 
-<img src="docs/screenshots/github-actions-ci-success.png" alt="GitHub Actions CI/CD success" width="900">
+Shows the `ci-gitops` workflow with validation and build/push/update-manifest jobs completed successfully.
+
+<br>
+
+<img src="docs/screenshots/github-actions-ci-success.png" alt="GitHub Actions CI/CD success" width="100%">
 
 </details>
 
 <details>
-<summary>ArgoCD Application Synced/Healthy</summary>
+<summary><strong>ArgoCD Application Synced/Healthy</strong></summary>
+
+Shows the isolated ArgoCD Application `portfolio-gitops-cicd-demo` running in `Synced / Healthy` state.
+
+<br>
 
 <img src="docs/screenshots/argocd-app-synced-healthy.png" alt="ArgoCD Application Synced Healthy" width="700">
 
 </details>
 
 <details>
-<summary>K3s runtime verification</summary>
+<summary><strong>K3s runtime verification</strong></summary>
 
-<img src="docs/screenshots/k3s-runtime-verification.png" alt="K3s runtime verification" width="900">
+Shows ArgoCD status, running pod, NetworkPolicy, and application `/version` and `/healthz` verification.
+
+<br>
+
+<img src="docs/screenshots/k3s-runtime-verification.png" alt="K3s runtime verification" width="100%">
 
 </details>
 
 <details>
-<summary>Kubernetes securityContext verification</summary>
+<summary><strong>Kubernetes securityContext verification</strong></summary>
 
-<img src="docs/screenshots/security-context-verification.png" alt="Kubernetes security context verification" width="900">
+Shows pod-level and container-level security hardening settings applied to the Deployment.
+
+<br>
+
+<img src="docs/screenshots/security-context-verification.png" alt="Kubernetes security context verification" width="100%">
 
 </details>
 
