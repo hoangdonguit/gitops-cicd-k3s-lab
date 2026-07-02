@@ -8,4 +8,4 @@ resources:
 
 images:
   - name: hoangdonguit/gitops-cicd-demo-app
-    newTag: sha-3fca754
+    newTag: sha-c73671f
