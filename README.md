@@ -132,9 +132,21 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 - Final runtime state: `docs/evidence/final-runtime-state.md`
 - End-to-end GitOps proof: `docs/evidence/e2e-gitops-proof.md`
 - CI quality gates proof: `docs/evidence/ci-quality-gates-proof.md`
+- Security hardening proof: `docs/evidence/security-hardening-proof.md`
 - Operations runbook: `docs/runbook/gitops-runbook.md`
 - GitOps deployment boundary decision: `docs/decisions/gitops-deployment-boundary.md`
 - Security hardening decision: `docs/decisions/security-hardening.md`
+## Current Verified Runtime
+
+Latest verified runtime state:
+
+- Image: `hoangdonguit/gitops-cicd-demo-app:sha-c73671f`
+- ArgoCD Application: `portfolio-gitops-cicd-demo`
+- ArgoCD status: `Synced / Healthy`
+- Namespace: `gitops-cicd-demo`
+- Runtime: K3s
+- Security hardening: non-root user, read-only root filesystem, dropped Linux capabilities, disabled privilege escalation, and NetworkPolicy.
+
 ## 8. Planned Milestones
 
 - [x] Bootstrap Flask app
@@ -146,7 +158,7 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 - [x] Reuse existing ArgoCD on K3s
 - [x] Create isolated ArgoCD Application
 - [x] Verify GitOps deployment flow
-- [ ] Add screenshots and final CV-ready documentation
+- [x] Add screenshots and final CV-ready documentation
 
 ## 9. Author
 
