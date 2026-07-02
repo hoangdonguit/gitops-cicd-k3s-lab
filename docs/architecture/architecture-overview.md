@@ -27,6 +27,19 @@ The goal is to demonstrate an end-to-end CI/CD and GitOps workflow for a small c
 | ArgoCD | GitOps controller that syncs Git state into K3s |
 | K3s | Kubernetes runtime target |
 
+## CI Quality Gates
+
+Before building and publishing a new image, the CI workflow validates the repository through:
+
+- Python dependency installation.
+- Flask unit tests with `pytest`.
+- Python bytecode compilation check.
+- Kustomize overlay rendering.
+- Basic manifest sanity checks for Deployment and Service resources.
+- Uploading the rendered manifest as a GitHub Actions artifact.
+
+The image build and manifest update job depends on the validation job. If validation fails, the image is not pushed and the GitOps manifest is not updated.
+
 ## GitOps Boundary
 
 GitHub Actions does not run `kubectl apply` against the application workload.

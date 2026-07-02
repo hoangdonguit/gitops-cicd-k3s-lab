@@ -1,6 +1,7 @@
 # gitops-cicd-k3s-lab
 
 [![ci-gitops](https://github.com/hoangdonguit/gitops-cicd-k3s-lab/actions/workflows/ci-gitops.yaml/badge.svg)](https://github.com/hoangdonguit/gitops-cicd-k3s-lab/actions/workflows/ci-gitops.yaml)
+[![manifest-validate](https://github.com/hoangdonguit/gitops-cicd-k3s-lab/actions/workflows/manifest-validate.yaml/badge.svg)](https://github.com/hoangdonguit/gitops-cicd-k3s-lab/actions/workflows/manifest-validate.yaml)
 
 A portfolio DevOps / Cloud-Native lab demonstrating an end-to-end CI/CD and GitOps workflow using GitHub Actions, Docker Hub, Kustomize, ArgoCD, and a K3s cluster.
 
@@ -21,6 +22,7 @@ The project focuses on a practical deployment lifecycle: build a container image
 ## Verified Capabilities
 
 - End-to-end deployment from code change to running Kubernetes pod.
+- CI quality gates with unit tests and Kustomize render validation.
 - ArgoCD Application isolation using a dedicated AppProject and namespace.
 - Rollback from `sha-be95c88` to `sha-9a1d923`.
 - Roll-forward back to `sha-be95c88`.
