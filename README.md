@@ -130,6 +130,7 @@ Evidence: `docs/evidence/e2e-gitops-proof.md`
 - Rollback proof: `docs/evidence/rollback-proof.md`
 - Final runtime state: `docs/evidence/final-runtime-state.md`
 - End-to-end GitOps proof: `docs/evidence/e2e-gitops-proof.md`
+- CI quality gates proof: `docs/evidence/ci-quality-gates-proof.md`
 - Operations runbook: `docs/runbook/gitops-runbook.md`
 - GitOps deployment boundary decision: `docs/decisions/gitops-deployment-boundary.md`
 ## 8. Planned Milestones
