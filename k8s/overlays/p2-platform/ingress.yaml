@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitops-cicd-demo-app
+  labels:
+    app.kubernetes.io/name: gitops-cicd-demo-app
+    app.kubernetes.io/part-of: k8s-platform-lab
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: demo.p2.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gitops-cicd-demo-app
+                port:
+                  number: 80
