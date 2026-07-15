@@ -91,4 +91,4 @@ def version():
 
 @app.get("/metrics")
 def metrics():
-    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
