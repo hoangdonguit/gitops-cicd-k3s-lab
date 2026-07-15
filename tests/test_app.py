@@ -33,3 +33,17 @@ def test_index_endpoint_contains_required_fields():
     assert "version" in data
     assert "hostname" in data
     assert "timestamp" in data
+
+
+def test_metrics_endpoint_exposes_prometheus_metrics():
+    client = app.test_client()
+
+    client.get("/healthz")
+    response = client.get("/metrics")
+    body = response.data.decode("utf-8")
+
+    assert response.status_code == 200
+    assert response.content_type.startswith("text/plain")
+    assert "gitops_cicd_demo_app_info" in body
+    assert "gitops_cicd_demo_http_requests_total" in body
+    assert "gitops_cicd_demo_http_request_duration_seconds" in body
