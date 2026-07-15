@@ -21,13 +21,13 @@ APP_INFO.labels(app=APP_NAME, version=APP_VERSION).set(1)
 HTTP_REQUESTS_TOTAL = Counter(
     "gitops_cicd_demo_http_requests_total",
     "Total HTTP requests handled by the application",
-    ["method", "endpoint", "status"],
+    ["method", "route", "status"],
 )
 
 HTTP_REQUEST_DURATION_SECONDS = Histogram(
     "gitops_cicd_demo_http_request_duration_seconds",
     "HTTP request duration in seconds",
-    ["method", "endpoint"],
+    ["method", "route"],
 )
 
 
@@ -38,9 +38,9 @@ def start_request_timer():
 
 @app.after_request
 def record_request_metrics(response):
-    endpoint = request.endpoint or "unknown"
+    route = request.endpoint or "unknown"
 
-    if endpoint != "metrics":
+    if route != "metrics":
         duration = time.perf_counter() - getattr(
             g,
             "request_start_time",
@@ -49,13 +49,13 @@ def record_request_metrics(response):
 
         HTTP_REQUESTS_TOTAL.labels(
             method=request.method,
-            endpoint=endpoint,
+            route=route,
             status=str(response.status_code),
         ).inc()
 
         HTTP_REQUEST_DURATION_SECONDS.labels(
             method=request.method,
-            endpoint=endpoint,
+            route=route,
         ).observe(duration)
 
     return response
