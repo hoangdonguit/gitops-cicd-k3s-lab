@@ -8,6 +8,7 @@ resources:
   - ingress.yaml
   - servicemonitor.yaml
   - prometheusrule.yaml
+  - prometheusrule-fire-drill.yaml
 
 labels:
   - pairs:

@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: gitops-cicd-demo-app-fire-drill
+  labels:
+    app.kubernetes.io/name: gitops-cicd-demo-app
+    app.kubernetes.io/part-of: k8s-platform-lab
+spec:
+  groups:
+    - name: gitops-cicd-demo-app.fire-drill
+      rules:
+        - alert: GitOpsDemoAppFireDrill
+          expr: vector(1)
+          for: 30s
+          labels:
+            severity: info
+            app: gitops-cicd-demo-app
+            drill: alert-pipeline
+          annotations:
+            summary: GitOps CI/CD demo app alert fire-drill
+            description: Temporary alert used to verify Prometheus alert evaluation and firing state without breaking the application.
