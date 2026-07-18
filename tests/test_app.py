@@ -47,3 +47,16 @@ def test_metrics_endpoint_exposes_prometheus_metrics():
     assert "gitops_cicd_demo_app_info" in body
     assert "gitops_cicd_demo_http_requests_total" in body
     assert "gitops_cicd_demo_http_request_duration_seconds" in body
+
+
+def test_metrics_use_route_label_for_http_requests():
+    client = app.test_client()
+
+    client.get("/healthz")
+    response = client.get("/metrics")
+    body = response.data.decode("utf-8")
+
+    assert 'route="healthz"' in body
+    assert 'method="GET"' in body
+    assert 'status="200"' in body
+    assert 'endpoint="healthz"' not in body

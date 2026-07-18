@@ -189,6 +189,27 @@ Shows pod-level and container-level security hardening settings applied to the D
 
 </details>
 
+## Platform integration
+
+This application is also onboarded into a separate Kubernetes platform repository:
+
+- Platform repo: `k8s-platform-lab`
+- App overlay consumed by platform: `k8s/overlays/p2-platform`
+- Runtime namespace on platform: `apps`
+- Ingress host on platform: `demo.p2.local`
+- Image tag source of truth: `k8s/base/kustomization.yaml` and `APP_VERSION` in `k8s/base/deployment.yaml`
+
+The platform integration adds:
+
+- ServiceMonitor scraping
+- PrometheusRule alerting
+- Grafana dashboard support from the platform repo
+- Kyverno policy validation from the platform repo
+
+More details:
+
+- `docs/integrations/k8s-platform-lab.md`
+
 ## Documentation
 
 - Architecture overview: `docs/architecture/architecture-overview.md`

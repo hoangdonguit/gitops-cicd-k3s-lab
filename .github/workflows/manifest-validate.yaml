@@ -22,13 +22,22 @@ jobs:
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
 
-      - name: Render dev overlay
+      - name: Render Kustomize overlays
         run: |
           mkdir -p /tmp/gitops-cicd-k3s-lab
+
           kubectl kustomize k8s/overlays/dev > /tmp/gitops-cicd-k3s-lab/rendered-dev.yaml
           test -s /tmp/gitops-cicd-k3s-lab/rendered-dev.yaml
           grep -q "kind: Deployment" /tmp/gitops-cicd-k3s-lab/rendered-dev.yaml
           grep -q "kind: Service" /tmp/gitops-cicd-k3s-lab/rendered-dev.yaml
+
+          kubectl kustomize k8s/overlays/p2-platform > /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
+          test -s /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
+          grep -q "kind: Deployment" /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
+          grep -q "kind: Service" /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
+          grep -q "kind: ServiceMonitor" /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
+          grep -q "kind: PrometheusRule" /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
+          grep -q "kind: Ingress" /tmp/gitops-cicd-k3s-lab/rendered-p2-platform.yaml
 
       - name: Show rendered manifest preview
         run: sed -n '1,160p' /tmp/gitops-cicd-k3s-lab/rendered-dev.yaml
@@ -36,5 +45,5 @@ jobs:
       - name: Upload rendered manifest
         uses: actions/upload-artifact@v4
         with:
-          name: rendered-dev-manifest
-          path: /tmp/gitops-cicd-k3s-lab/rendered-dev.yaml
+          name: rendered-kustomize-manifests
+          path: /tmp/gitops-cicd-k3s-lab/*.yaml
